@@ -46,7 +46,7 @@ def compute_gradient(X, y, w, b):
     return dj_dw, dj_db
 
 
-def gradient_descent(X, y, w_in, b_in, alpha, num_iters):
+def gradient_descent(X, y, w_in, b_in, alpha, num_iters, verbose=True):
     """Runs batch gradient descent, returns final w, b and the cost
     history (useful for plotting convergence / picking a learning rate).
     """
@@ -60,7 +60,7 @@ def gradient_descent(X, y, w_in, b_in, alpha, num_iters):
         b = b - alpha * dj_db
         J_history.append(compute_cost(X, y, w, b))
 
-        if i % max(1, num_iters // 10) == 0 or i == num_iters - 1:
+        if verbose and (i % max(1, num_iters // 10) == 0 or i == num_iters - 1):
             print(f"iter {i:5d}: cost {J_history[-1]:.4f}")
 
     return w, b, J_history

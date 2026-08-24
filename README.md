@@ -111,6 +111,16 @@ single learning rate works well and convergence is much faster.
 
 ![cost vs iterations](plots/cost_vs_iterations.png)
 
+### Choosing a learning rate
+
+![learning rate sweep](plots/learning_rate_sweep.png)
+
+Sweeping alpha on the normalized features (log-scale y-axis) shows the
+three regimes: `0.001`/`0.01` are too small and barely move in 60
+iterations; `0.1` converges quickly and smoothly; `0.3` overshoots the
+minimum, and after a brief dip the cost turns around and diverges. This
+is why `alpha=0.1` is used for training above.
+
 ### Predicted vs actual price
 
 ![predictions vs actual](plots/predictions_vs_actual.png)

@@ -65,6 +65,22 @@ def main():
         X_train, y_train, np.zeros(X_train.shape[1]), 0.0, alpha_raw, NUM_ITERS
     )
 
+    # --- Learning rate sweep on normalized features: too small barely
+    # moves, a good rate converges quickly, too large overshoots and
+    # diverges. Run for fewer iterations so the diverging runs stay
+    # finite (they blow up to inf/nan if left running too long). ---
+    print("\nSweeping learning rates on normalized features...")
+    sweep_alphas = [0.001, 0.01, 0.03, 0.1, 0.3]
+    sweep_iters = 60
+    sweep_histories = {}
+    for a in sweep_alphas:
+        _, _, J_hist = gradient_descent(
+            X_train_norm, y_train, np.zeros(X_train.shape[1]), 0.0,
+            a, sweep_iters, verbose=False,
+        )
+        sweep_histories[a] = J_hist
+        print(f"  alpha={a:<6} final cost after {sweep_iters} iters: {J_hist[-1]:,.1f}")
+
     # --- sklearn baseline, trained on the same normalized data ---
     sk_model = LinearRegression()
     sk_model.fit(X_train_norm, y_train)
@@ -117,6 +133,20 @@ def main():
     plt.legend()
     plt.tight_layout()
     plt.savefig("plots/predictions_vs_actual.png", dpi=150)
+    plt.close()
+
+    # --- Plot 4: learning rate sweep, log-scale so both the slow-moving
+    # small-alpha runs and the diverging large-alpha run are visible ---
+    plt.figure(figsize=(7, 5))
+    for a in sweep_alphas:
+        plt.plot(sweep_histories[a], label=f"alpha={a}")
+    plt.yscale("log")
+    plt.xlabel("Iteration")
+    plt.ylabel("Cost J(w,b)  (log scale)")
+    plt.title("Learning Rate Sweep (normalized features)")
+    plt.legend()
+    plt.tight_layout()
+    plt.savefig("plots/learning_rate_sweep.png", dpi=150)
     plt.close()
 
     print("\nSaved plots to plots/")
