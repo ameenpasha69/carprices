@@ -9,8 +9,8 @@ used afterwards as a sanity-check baseline).
 This project applies: cost function derivation, vectorized gradient
 descent, multiple features, and z-score normalization.
 
-Includes an **[interactive Streamlit demo](#streamlit-demo)** — tweak a
-car's specs with sliders and see the predicted price update live.
+**[Live demo](https://carprices-ml.streamlit.app)** — tweak a car's specs
+with sliders and see the predicted price update live.
 
 ## Dataset
 
@@ -131,10 +131,14 @@ is why `alpha=0.1` is used for training above.
 
 ## Streamlit demo
 
+**Live: [carprices-ml.streamlit.app](https://carprices-ml.streamlit.app)**
+
 An interactive app (`app.py`) that trains both models on startup, then
 lets you set a car's specs with sliders and see the from-scratch and
 sklearn predicted prices update live -- a quick way to sanity-check the
 two models agree, and to poke at the model without reading code.
+Deployed on Streamlit Community Cloud, auto-redeploys on every push to
+`main`.
 
 Run it locally:
 
@@ -142,11 +146,6 @@ Run it locally:
 pip install -r requirements.txt
 streamlit run app.py
 ```
-
-To get a shareable live link: push this repo to GitHub (already done
-here), then go to [share.streamlit.io](https://share.streamlit.io), sign
-in with GitHub, and deploy this repo with `app.py` as the entry point --
-free, and takes about 2 minutes.
 
 ## Key takeaways
 
